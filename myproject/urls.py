@@ -19,4 +19,8 @@ from tutorial.views import index
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index), 
+    path('accounts/', include('accounts.urls' , namespace='accounts') ),
+    path('',login_redirect , name = 'login_redirect'),
+
 ]
+ 
