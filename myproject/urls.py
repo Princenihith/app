@@ -19,8 +19,8 @@ from tutorial.views import index
 from myproject.views import login_redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('',index), 
-    path('', include('accounts.urls' , namespace='accounts') ),
+    path('',index), 
+    path('accounts/', include('accounts.urls' , namespace='accounts') ),
     path('',login_redirect , name = 'login_redirect'),
 
 ]
