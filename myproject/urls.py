@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from tutorial.views import index
+from tutorial.views import index, login_redirect
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index), 
