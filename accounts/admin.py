@@ -1,6 +1,6 @@
 from django.contrib import admin
 from accounts.models import UserProfile 
-from home.models import Post
+# from home.models import Post
 from accounts.models import Profile,Product
 # Register your models here.
 class UserProfileAdmin(admin.ModelAdmin):
@@ -25,6 +25,6 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'dob', 'photo')
 
 admin.site.register(Profile, ProfileAdmin)
-admin.site.register(Post)
+# admin.site.register(Post)
 
 
