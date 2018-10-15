@@ -22,6 +22,8 @@ urlpatterns = [
     path('',index), 
     path('accounts/', include('accounts.urls' , namespace='accounts') ),
     path('',login_redirect , name = 'login_redirect'),
+    path('home/', include('home.urls' , namespace='home') ),
+    path('reviews/', include('reviews.urls', namespace='reviews')),
 
 ]
  
