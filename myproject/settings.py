@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'home',
     'reviews',
-    'bootstrap3',
+    # 'bootstrap3',
 ]
 
 MIDDLEWARE = [
