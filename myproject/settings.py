@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zxs+=dn1nlctk1sa47t&!kbe2hx(^k_at(fr81mlu4yz&yjwt4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [ 'secret-ravine-63793.herokuapp.com',]
 
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'home',
     'reviews',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
