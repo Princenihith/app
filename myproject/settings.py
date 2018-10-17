@@ -131,3 +131,20 @@ STATICFILES_DIRS = [
     ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_EXEMPT_URLS = [
+   r'^accounts/login/$',
+   r'^accounts/register/$',
+   r'^accounts/search/$',
+   #r'^home/post/(?P<pk>[0-9]+)/$',
+   # r'^review/$',
+   # r'^reviews/review/(?P<review_id>[0-9]+)/$',
+   # r'^reviews/wine$',
+   # r'^reviews/wine/(?P<wine_id>[0-9]+)/$',
+   # r'^reviews/wine/(?P<wine_id>[0-9]+)/add_review/$',
+   r'^accounts/reset-password/$',
+   r'^accounts/reset-password/done/$',
+   r'^accounts/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+   r'^accounts/reset-password/complete/$',
+    ]
