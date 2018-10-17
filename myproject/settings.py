@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     # 'bootstrap3',
 ]
 
+AUTHENTICATION_BACKENDS = [
+
+    'accounts.authentication.EmailAuthbackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
