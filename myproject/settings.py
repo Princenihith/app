@@ -134,17 +134,17 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_EXEMPT_URLS = [
-   r'^accounts/login/$',
-   r'^accounts/register/$',
-   r'^accounts/search/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/login/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/register/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/search/$',
    #r'^home/post/(?P<pk>[0-9]+)/$',
    # r'^review/$',
    # r'^reviews/review/(?P<review_id>[0-9]+)/$',
    # r'^reviews/wine$',
    # r'^reviews/wine/(?P<wine_id>[0-9]+)/$',
    # r'^reviews/wine/(?P<wine_id>[0-9]+)/add_review/$',
-   r'^accounts/reset-password/$',
-   r'^accounts/reset-password/done/$',
-   r'^accounts/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
-   r'^accounts/reset-password/complete/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/reset-password/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/reset-password/done/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
+   r'^https://secret-ravine-63793.herokuapp.com/accounts/reset-password/complete/$',
     ]
