@@ -151,9 +151,9 @@ LOGIN_EXEMPT_URLS = [
     ]
 
 
-EMAIL_BACKEND = ‘django.core.mail.backends.smtp.EmailBackend’
-EMAIL_HOST = ‘smtp.gmail.com’
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ‘princenihith.1@gmail.com’
-EMAIL_HOST_PASSWORD = ‘9848033221123456..’
+EMAIL_HOST_USER = 'princenihith.1@gmail.com'
+EMAIL_HOST_PASSWORD = '9848033221123456..'
