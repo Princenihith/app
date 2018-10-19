@@ -222,7 +222,7 @@ def register(request):
 			new_user = form.save(commit=False)
 			new_user.set_password(form.cleaned_data['password'])
 			new_user.save()
-			UserProfile.objects.create(user=new_user)
+			UserProfile.objects.get_or_create(user=new_user)
 			return redirect(reverse('accounts:login'))
 	else:
 		form = RegistrationForm()
