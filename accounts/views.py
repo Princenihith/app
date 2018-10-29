@@ -396,4 +396,22 @@ def search(request):
 #                 'r': results,
 #     }
 #     return render(request, template_name, context)           
-        
+  
+
+  def landing_page(request):
+    print(2)
+    # logout(request)
+    username = password = ''
+    if request.method == 'POST':
+        username = request.POST['user']
+        password = request.POST['password']
+        print(username)
+        print(password)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse("home:home"))
+    print(1)
+    # return render_to_response('accounts/login1.html', context_instance=RequestContext(request))
+    return render(request, 'accounts/login.html')      

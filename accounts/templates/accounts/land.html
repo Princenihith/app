@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Allabouthairdressers</title>
+
+    <link href="{% static 'css/bootstrap.css' %}"  rel="stylesheet">
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Courgette|Kaushan+Script" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+    <nav class="navbar  bg-light static-top " style="height: 80px;">  
+      <a class="navbar-brand" href="#"><img src="{% static 'accounts/logo1.png' %}"></a>
+
+      <div class="button_main">
+        
+        <a class="btn btn_main" href="signup.html"> Sign In</a>
+        <a class="btn  btn_main2" data-toggle="modal" data-target="#login-modal"  href="{% url 'accounts:login1' %}"> Login</a>
+        
+        
+      </div>
+    </nav>
+
+ <div class="main_container">
+      <div class="overlay text-white text-center">
+        <div class="container">     
+            <div class="content">
+              <h3>Beauty Specialist</h3>
+              <p>Book hair and makeup professionals near to you</p>
+            </div>
+               <div class="col-md-12">
+              <div class="row">
+            <div class="select col-md-4" style="float: right;">
+              <select>
+                <option>All</option>
+                <option>Gudimalkapur</option>
+                <option>Jubliehills</option>
+                <option>Madhapur</option>
+                <option>SR Nagar</option>
+                <option>Banjarahills</option>
+                <option>Mahadevpuram</option>
+              </select>
+          </div>
+            <div class="select_2 col-md-4">
+              <select>
+                <option>Select a service</option>
+                <option>Gudimalkapur</option>
+                <option>Jubliehills</option>
+                <option>Madhapur</option>
+                <option>SR Nagar</option>
+                <option>Banjarahills</option>
+                <option>Mahadevpuram</option>
+              </select>
+            </div>
+              <div class="col-md-4 bttn_find">
+                  <button type="submit" class="btn  btn-lg " >Find stylist</button>                
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+ 
+<div class="content_main">
+  <h1>How it works ?</h1>
+      <div class=" cont_1">
+        <div class="row">
+          <div class="col-lg-3">
+            <img src= "{% static 'accounts/location.jpg' %}" class="img-responsive"/>
+          </div>
+          <div class="col-md-9">
+            <p>Choose your location, service and click on find stylist to get a list of stylists.</p>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class=" cont_2">
+        <div class="row">
+          <div class="col-md-9">
+            <p>Browse the list of profiles and choose the stylist depending upon his work, reviews from the users</p>
+          </div>
+          <div class="col-lg-3">
+            <img src="{% static 'accounts/profile.png' %}" class="img-responsive">
+          </div>
+        </div>
+      </div>
+  </div>
+  <br>
+  <br>
+
+
+  <div class="overlay_2 text-white text-center">
+    <div class="container">
+      <div class="content">
+              <h3>Product Reviews</h3>
+              <p>Get the best product reviews from the beauty professionals and models</p>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="text col-md-8">
+          <input type="text" class="form-control" placeholder="Product name....." >
+          </div>
+          <div class="col-md-4 bttn_find_2" style="float: right;">
+                  <button type="submit" class="btn  btn-lg " >Search</button>                
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<br>
+<div class="content">
+  <p>Find the best product reviews from the beauty professionals and models</p>
+</div>
+
+
+</div> 
+
+
+
+
+
+
+<footer class="fot_1 bg-dark col-lg-12">
+          <div class="row">
+          <div class="on_1 col-md-6">
+            <h3>All rights reserved</h3>
+            <p style="text-align: left; font-size: 22px;">Our website is the online destination for beauty & wellness professionals and clients. Professionals can showcase their work, connect with new and existing clients, and build their business. Clients can discover new services and providers, book appointments online, and get inspired.</p>
+          </div>
+          <div class="col-md-3">
+            <ul class=" navbar-nav">
+              <h3>Media</h3>
+               <li class="nav-item text-secondary">Our blog</li>
+               <li class="nav-item text-secondary">Press</li>
+               <li class="nav-item text-secondary">Stories</li>
+               <li class="nav-item text-secondary">Videos</li>
+              </ul>
+              <ul class="navbar-nav">
+              <h3>Talk To Us</h3>
+               <li class="nav-item text-secondary">info@allabouthairdressers.com</li>
+               <li class="nav-item text-secondary">Help Center</li>
+              </ul>
+              </div>
+              <div class="col-md-3">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-secondary">FIND PROFESSIONALS</li>
+                  <li class="nav-item text-secondary">GET LISTED</li>
+                  <li class="nav-item text-secondary">TEAM</li>
+                  <li class="nav-item text-secondary">CAREERS</li>
+                  <li class="nav-item text-secondary">TERMS FOR PROS</li>
+                  <li class="nav-item text-secondary">TERMS FOR CLIENTS</li>
+                  <li class="nav-item text-secondary">PRIVACY</li>
+                  <li class="nav-item text-secondary">SITEMAP</li>
+                </ul>
+            </div>
+        </footer>
+
+  </body>
+</html>

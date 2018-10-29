@@ -10,7 +10,8 @@ app_name = "accounts"
 
 urlpatterns = [
      # path('',views.home,name='home'),
-     path('login/', login ,  {'template_name': 'accounts/login.html' } , name='login' ),
+     # path('login/', login ,  {'template_name': 'accounts/login.html' } , name='login' ),
+     path('login/', views.landing_page , name='login1' ),
      path('logout/', logout ,  {'template_name': 'accounts/logout.html' } , name='logout' ),
      path('register/', views.register , name= 'register'),
      url(r'^profile/(?P<username>\w+)/?$', views.view_profile, name='profile'),

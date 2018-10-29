@@ -24,9 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',index), 
     path('accounts/', include('accounts.urls' , namespace='accounts') ),
-    path('',login_redirect , name = 'login_redirect'),
+    # path('',login_redirect , name = 'login_redirect'),
     path('home/', include('home.urls' , namespace='home') ),
     path('reviews/', include('reviews.urls', namespace='reviews')),
+    path('',land , name = 'land'),
 
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
