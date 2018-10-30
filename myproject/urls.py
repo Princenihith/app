@@ -4,7 +4,7 @@ The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.0/topics/http/urls/
 Examples:
 Function views
-    1. Add an import:  from my_app import views
+    1. Add an import:  from my_app import views 
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
@@ -22,7 +22,7 @@ from myproject.views import login_redirect,land
 from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',index), 
+    # path('',index), 
     path('accounts/', include('accounts.urls' , namespace='accounts') ),
     # path('',login_redirect , name = 'login_redirect'),
     path('home/', include('home.urls' , namespace='home') ),
