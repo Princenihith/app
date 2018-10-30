@@ -25,8 +25,8 @@ SECRET_KEY = 'zxs+=dn1nlctk1sa47t&!kbe2hx(^k_at(fr81mlu4yz&yjwt4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# ALLOWED_HOSTS = []
 ALLOWED_HOSTS = [ 'secret-ravine-63793.herokuapp.com',]
-
 
 # Application definition
 
@@ -135,7 +135,7 @@ DATABASES['default'].update(db_from_env)
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'static'),
     ]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'myproject/media/')

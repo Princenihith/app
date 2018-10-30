@@ -398,7 +398,7 @@ def search(request):
 #     return render(request, template_name, context)           
   
 
-  def landing_page(request):
+def landing_page(request):
     print(2)
     # logout(request)
     username = password = ''
