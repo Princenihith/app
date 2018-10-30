@@ -1,20 +1,30 @@
-from django.shortcuts import render , redirect
-from django.http import Http404,HttpResponseRedirect
+from django.shortcuts import render , redirect ,render_to_response
+from django.http import Http404,HttpResponseRedirect,HttpResponse
 from django.urls import reverse
 from django.views.generic import TemplateView
 from accounts.forms import RegistrationForm, EditProfileForm,ProfileEditForm,UserEditForm
-							# modelform ,CustomUserCreationForm,SignUpForm,UsernameForm
+                            # modelform ,CustomUserCreationForm,SignUpForm,UsernameForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from accounts.models import Profile, UserProfile
-									# ,Username
+                                    # ,Username
 from django.contrib.auth import login, authenticate
 from django.shortcuts import get_object_or_404
 from .import forms
 from django.db.models import Q
 from home.models import Post 
+
+from django.template import RequestContext
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.template.loader import render_to_string
+
+from django.contrib import messages
 # Create your views here.
 
 def signup(request,radio):
@@ -33,22 +43,22 @@ def signup(request,radio):
 
 
 
-
+ 
 
 
 
 
 # def register(request):
-# 	if request.method == 'POST':
-# 		form = RegistrationForm(request.POST)
-# 		if form.is_valid():
-# 			form.save()
-# 			return redirect(reverse('accounts:login'))
-# 	else:
-# 		form = RegistrationForm()
+#   if request.method == 'POST':
+#       form = RegistrationForm(request.POST)
+#       if form.is_valid():
+#           form.save()
+#           return redirect(reverse('accounts:login'))
+#   else:
+#       form = RegistrationForm()
 
-# 	args = {'form':form}
-# 	return render(request, 'accounts/reg_form.html',args)
+#   args = {'form':form}
+#   return render(request, 'accounts/reg_form.html',args)
 
 # def view_profile(request, pk=None):
 #     if pk:
@@ -151,16 +161,16 @@ def view_model(request,pk=None):
     return render(request, 'accounts/profile_model.html', args)
 
 # def edit_profile(request):
-# 	if request.method == 'POST':
-# 		form = EditProfileForm(request.POST, instance=request.user)
+#   if request.method == 'POST':
+#       form = EditProfileForm(request.POST, instance=request.user)
 
-# 		if form.is_valid():
-# 			form.save()
-# 			return redirect(reverse('accounts:profile'))
-# 	else:
-# 		form = EditProfileForm(instance = request.user)
-# 		args = {'form': form}
-# 		return render(request, 'accounts/edit_profile.html', args)
+#       if form.is_valid():
+#           form.save()
+#           return redirect(reverse('accounts:profile'))
+#   else:
+#       form = EditProfileForm(instance = request.user)
+#       args = {'form': form}
+#       return render(request, 'accounts/edit_profile.html', args)
 
 
 
@@ -172,34 +182,32 @@ def view_model(request,pk=None):
 
 
 def change_password(request):
-	if request.method == 'POST':
-		form = PasswordChangeForm(data=request.POST, user=request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(data=request.POST, user=request.user)
 
-		if form.is_valid():
-			form.save()
-			update_session_auth_hash(request,form.user)
-			return redirect(reverse('accounts:profile'))
-		else:
-			return redirect(reverse('accounts:change_password'))
-	else:
-		form = PasswordChangeForm(user = request.user)
-		args = {'form': form}
-		return render(request, 'accounts/change_password.html', args)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request,form.user)
+            return redirect(reverse('accounts:profile'))
+        else:
+            return redirect(reverse('accounts:change_password'))
+    else:
+        form = PasswordChangeForm(user = request.user)
+        args = {'form': form}
+        return render(request, 'accounts/change_password.html', args)
 def model(request):
-	if request.method == 'POST':
-		form = modelform(data = request.POST , instance = request.user)
+    if request.method == 'POST':
+        form = modelform(data = request.POST , instance = request.user)
 
-		if form.is_valid():
-			form.save()
-			return redirect(reverse('accounts:profile'))
-		else:
-			return redirect(reverse('accounts:model'))
-	else:
-		form = modelform(instance = request.user)
-		args = {'form' : form}
-		return render(request , 'accounts/model.html',args)
-
-
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('accounts:profile'))
+        else:
+            return redirect(reverse('accounts:model'))
+    else:
+        form = modelform(instance = request.user)
+        args = {'form' : form}
+        return render(request , 'accounts/model.html',args)
 
 
 
@@ -213,23 +221,66 @@ def model(request):
 
 
 
-	# return render(request, 'accounts/model.html', {'form':form})
+
+
+    # return render(request, 'accounts/model.html', {'form':form})
+
+# def register(request):
+#   if request.method == 'POST':
+#       form = RegistrationForm(request.POST or None)
+#       if form.is_valid():
+#           new_user = form.save(commit=False)
+#           new_user.set_password(form.cleaned_data['password'])
+#           new_user.save()
+#           UserProfile.objects.get_or_create(user=new_user)
+#           return redirect(reverse('accounts:login'))
+#   else:
+#       form = RegistrationForm()
+#   context = {
+#         'form': form,
+#     }
+#   return render(request, 'accounts/reg_form.html', context)
+
 
 def register(request):
-	if request.method == 'POST':
-		form = RegistrationForm(request.POST or None)
-		if form.is_valid():
-			new_user = form.save(commit=False)
-			new_user.set_password(form.cleaned_data['password'])
-			new_user.save()
-			UserProfile.objects.get_or_create(user=new_user)
-			return redirect(reverse('accounts:login'))
-	else:
-		form = RegistrationForm()
-	context = {
-        'form': form,
-    }
-	return render(request, 'accounts/reg_form.html', context)
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.is_active = False
+            user.save()
+            current_site = get_current_site(request)
+            mail_subject = 'Activate your blog account.'
+            message = render_to_string('accounts/acc_active_email.html', {
+                'user': user,
+                'domain': current_site.domain,
+                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            to_email = form.cleaned_data.get('email')
+            email = EmailMessage(
+                        mail_subject, message, to=[to_email]
+            )
+            email.send()
+            return HttpResponse('Please confirm your email address to complete the registration')
+    else:
+        form = RegistrationForm()
+    return render(request, 'accounts/reg_form.html', {'form': form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        # return redirect('home')
+        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        return HttpResponse('Activation link is invalid!')
 
 
 # class HomeView(TemplateView):
@@ -395,8 +446,7 @@ def search(request):
 #     context = {
 #                 'r': results,
 #     }
-#     return render(request, template_name, context)           
-  
+#     return render(request, template_name, context)       
 
 def landing_page(request):
     print(2)
@@ -412,6 +462,12 @@ def landing_page(request):
             if user.is_active:
                 login(request, user)
                 return HttpResponseRedirect(reverse("home:home"))
+        else:
+            messages.error(request,'username or password not correct')
+            return redirect('accounts:login1')
     print(1)
     # return render_to_response('accounts/login1.html', context_instance=RequestContext(request))
-    return render(request, 'accounts/login.html')      
+    return render(request, 'accounts/login.html')
+
+
+        

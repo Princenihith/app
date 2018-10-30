@@ -35,9 +35,18 @@
         <div class="loginmodal-container">
           <h1>Login to Your Account</h1><br>
           <form action="" method="post">
-          	{% csrf_token %}
+            {% csrf_token %}
           <input type="text" name="user" placeholder="Username">
           <input type="password" name="password" placeholder="Password">
+          {% for message in messages %}
+
+                    <div class="alert alert-success">
+                        <a class="close"  data-dismiss="alert">×</a>
+
+                        {{ message }}
+
+                    </div>
+            {% endfor %}
           <input type="submit" name="login" class="login loginmodal-submit" value="Login">
           </form>
           
