@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
+  <head> 
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,8 +22,8 @@
 
       <div class="button_main">
          <!-- <a class="btn btn_main" href="index.html"> Home</a> -->
-        <a class="btn btn_main" href="signup.html"> Sign In</a>
-        <a class="btn  btn_main2" data-toggle="modal" data-target="#login-modal" href="#"> Login</a>
+        <a class="btn btn_main" href="{% url 'accounts:register1' %}"> Sign In</a>
+        <a class="btn  btn_main2" data-toggle="modal" data-target="#login-modal" href="{% url 'accounts:login1' %}"> Login</a>
         
         
       </div>
@@ -35,7 +35,7 @@
         <div class="loginmodal-container">
           <h1>Login to Your Account</h1><br>
           <form action="" method="post">
-            {% csrf_token %}
+          	{% csrf_token %}
           <input type="text" name="user" placeholder="Username">
           <input type="password" name="password" placeholder="Password">
           {% for message in messages %}

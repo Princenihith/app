@@ -1,19 +1,64 @@
-{% extends 'base.html' %}
-{%  load static %}
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'accounts/style.css' %}">
-<title>REGISTRATION</title>
-{% endblock %} 
 
-{% block body %}
-<div class="container">
-<h1>REGISTER</h1>
-<form action="/accounts/register/" method="POST">
-{% csrf_token %}
-{{ form.as_p}}
-<button type="submit">SUBMIT</button>
-	
-	
+ {% load static %}
+ <!DOCTYPE html>
+<html lang="en">
+
+  <head> 
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Allabouthairdressers</title>
+
+    <link href="{% static 'css/bootstrap.css' %}"  rel="stylesheet">
+    <link href="{% static 'css/signup.css' %}"  rel="stylesheet">
+
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Courgette|Kaushan+Script" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <nav class="navbar  bg-light static-top " style="height: 80px;">  
+      <a class="navbar-brand" href="#"><img src="{% static 'accounts/logo1.png' %}"></a>
+      <div class="button_main">
+        <a class="btn btn_main" href="{% url 'accounts:register1' %}"> Sign In</a>
+        <a class="btn  btn_main2" href="{% url 'accounts:login1' %}"> Login</a>
+        
+        
+      </div>
+    </nav>
+
+
+
+<form action="" method="post">
+            {% csrf_token %}
+  <div class="container">
+    <h1>Sign Up</h1>
+    <hr>
+     {% for field in form %}
+      
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+          <br>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      
+    {% endfor %}
+    
+
+    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+    <div class="boo clearfix">
+      <button type="submit" class="signupbtn">Sign Up</button>
+    </div>
+  </div>
 </form>
-</div>
-{% endblock %}
+
+
+
+  </body>
+</html>

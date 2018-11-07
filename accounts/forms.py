@@ -2,15 +2,15 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile,UserProfile
-						# ,Username
+                        # ,Username
 from django.core.exceptions import ValidationError
 
 CHOICES = [('1', 'PROFESSIONAL',), ('0', 'USER',)]
 
 # class UsernameForm(models.ModelForm):
-# 	class meta:
-# 		model = Username
-# 		fields = ('user','username','email','password1','password2','radio')
+#   class meta:
+#       model = Username
+#       fields = ('user','username','email','password1','password2','radio')
 
 
 
@@ -67,73 +67,92 @@ CHOICES = [('1', 'PROFESSIONAL',), ('0', 'USER',)]
 #         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2','radio' )
 
 
+# class RegistrationForm(forms.ModelForm):
+#   radio = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+#   password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder':'Enter Password Here...'}))
+#   confirm_password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder':'Confirm Password...'}))
+#   class Meta:
+#       model = User
+#       fields = (
+#             'username',
+#             'first_name',
+#             'last_name',
+#             'email',
+#         )
+
+#   def clean_confirm_password(self):
+#       password = self.cleaned_data.get('password')
+#       confirm_password = self.cleaned_data.get('confirm_password')
+#       if password != confirm_password:
+#           raise forms.ValidationError("Password Mismatch")
+#       return confirm_password
+
+
+
 class RegistrationForm(forms.ModelForm):
-	radio = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
-	password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder':'Enter Password Here...'}))
-	confirm_password = forms.CharField(widget = forms.PasswordInput(attrs = {'placeholder':'Confirm Password...'}))
-	class Meta:
-		model = User
-		fields = (
+    email = forms.EmailField(max_length=254,help_text='Required. Inform a valid email address')
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Enter password here'}))
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder':'Confirm password here'}))
+    class Meta:
+        model = User
+        fields = (
             'username',
-            'first_name',
-            'last_name',
-            'email',
-        )
-
-	def clean_confirm_password(self):
-		password = self.cleaned_data.get('password')
-		confirm_password = self.cleaned_data.get('confirm_password')
-		if password != confirm_password:
-			raise forms.ValidationError("Password Mismatch")
-		return confirm_password
-
-
-
-
+             'first_name',
+             'last_name',
+             'email',   
+             'password',
+             'confirm_password',
+            )
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password != confirm_password:
+            raise forms.ValidationError("password Mismatch")
+        return confirm_password
 
 
 
 
 
 # class RegistrationForm(UserCreationForm):
-# 	email = forms.EmailField(required = True)
-# 	radio = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+#   email = forms.EmailField(required = True)
+#   radio = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
-# 	class Meta:
-# 		model = User
-# 		fields = (
-# 		     'username',
-# 		     'first_name',
-# 		     'last_name',
-# 		     'email',
-# 		     'password1',
-# 		     'password2',
-# 		     'radio',
-# 		)	
-# 	def save(self, commit = True):
-# 		user = super(RegistrationForm, self).save(commit=False)
-# 		user.first_name = self.cleaned_data['first_name']
-# 		user.last_name = self.cleaned_data['last_name']
-# 		user.email = self.cleaned_data['email']
-# 		user.radio = ['radio']
+#   class Meta:
+#       model = User
+#       fields = (
+#            'username',
+#            'first_name',
+#            'last_name',
+#            'email',
+#            'password1',
+#            'password2',
+#            'radio',
+#       )   
+#   def save(self, commit = True):
+#       user = super(RegistrationForm, self).save(commit=False)
+#       user.first_name = self.cleaned_data['first_name']
+#       user.last_name = self.cleaned_data['last_name']
+#       user.email = self.cleaned_data['email']
+#       user.radio = ['radio']
 
-# 		if commit:
-# 			user.save()
+#       if commit:
+#           user.save()
 
-# 			return user
+#           return user
 
 
 class EditProfileForm(UserChangeForm):
-	username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
-	email = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
-	class Meta:
-		model = User
-		fields = [
-				'username',
-				'first_name',
-				'last_name',
-				'email',
-				]
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    email = forms.CharField(widget=forms.TextInput(attrs={'readonly':'readonly'}))
+    class Meta:
+        model = User
+        fields = [
+                'username',
+                'first_name',
+                'last_name',
+                'email',
+                ]
 
 # class ProfileEditForm(forms.ModelForm):
 #     class Meta:
@@ -152,20 +171,20 @@ class UserEditForm(forms.ModelForm):
             'email',
         ]
         exclude=[
-        	'Password',
-        	'last_login',
+            'Password',
+            'last_login',
         ]
         def clean_password(self):
-        	return self.initial["password"]
+            return self.initial["password"]
 
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         exclude = ['user',
-        			'password',
-        			'last_login',
-        			]
+                    'password',
+                    'last_login',
+                    ]
  
 
 
@@ -194,38 +213,38 @@ class ProfileEditForm(forms.ModelForm):
 
 # class EditProfileForm(UserChangeForm):
 
-# 	class Meta:
-# 		model = User
-# 		fields = {
-# 			'first_name',
-# 			'last_name',
-# 			'email',
-# 			'password',	
-# 		}
-# 		exclude= ('password',)
+#   class Meta:
+#       model = User
+#       fields = {
+#           'first_name',
+#           'last_name',
+#           'email',
+#           'password', 
+#       }
+#       exclude= ('password',)
 
-# 		def clean_password(self):
-# 			 return self.initial["password"]
+#       def clean_password(self):
+#            return self.initial["password"]
 
 # class modelform(forms.ModelForm):
-# 	class Meta:
-# 		model = UserProfile
-# 		fields = ['description', 'city' , 'website',
-# 				'phone', 'image']
+#   class Meta:
+#       model = UserProfile
+#       fields = ['description', 'city' , 'website',
+#               'phone', 'image']
 
 
 
-# 	def save(self, commit = True):
-# 		UserProfile = super(modelform, self).save(commit=False)
-# 		UserProfile.description = self.cleaned_data['description']
-# 		UserProfile.city = self.cleaned_data['city']
-# 		UserProfile.website = self.cleaned_data['website']
-# 		UserProfile.phone = self.cleaned_data['phone']
-# 		UserProfile.image = self.cleaned_data['image']
+#   def save(self, commit = True):
+#       UserProfile = super(modelform, self).save(commit=False)
+#       UserProfile.description = self.cleaned_data['description']
+#       UserProfile.city = self.cleaned_data['city']
+#       UserProfile.website = self.cleaned_data['website']
+#       UserProfile.phone = self.cleaned_data['phone']
+#       UserProfile.image = self.cleaned_data['image']
 
-# 		if commit:
-# 			UserProfile.save()
+#       if commit:
+#           UserProfile.save()
 
-# 			return UserProfile
+#           return UserProfile
 
 

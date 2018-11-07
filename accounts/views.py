@@ -106,7 +106,7 @@ def signup(request,radio):
 #         'profile_form': profile_form,
 #     }
 #     return render(request, 'accounts/edit_profile.html', context)
-
+@login_required(login_url='/accounts/login/')
 def view_profile(request, username=None):
     if username:
         #print(pk)
@@ -119,7 +119,7 @@ def view_profile(request, username=None):
     args = {'user': user}
     return render(request, 'accounts/profile.html', args)
 
-@login_required
+@login_required(login_url='/accounts/login/')
 def edit_profile(request):
     if request.method == 'POST':
         print('3')
@@ -151,7 +151,7 @@ def edit_profile(request):
 
 
 
-
+@login_required(login_url='/accounts/login/')
 def view_model(request,pk=None):
     if pk:
         user = user.UserProfile.objects.get(pk=pk)
@@ -180,7 +180,7 @@ def view_model(request,pk=None):
 
 
 
-
+@login_required(login_url='/accounts/login/')
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(data=request.POST, user=request.user)
@@ -195,6 +195,8 @@ def change_password(request):
         form = PasswordChangeForm(user = request.user)
         args = {'form': form}
         return render(request, 'accounts/change_password.html', args)
+
+@login_required(login_url='/accounts/login/')
 def model(request):
     if request.method == 'POST':
         form = modelform(data = request.POST , instance = request.user)
@@ -225,47 +227,47 @@ def model(request):
 
     # return render(request, 'accounts/model.html', {'form':form})
 
-# def register(request):
-#   if request.method == 'POST':
-#       form = RegistrationForm(request.POST or None)
-#       if form.is_valid():
-#           new_user = form.save(commit=False)
-#           new_user.set_password(form.cleaned_data['password'])
-#           new_user.save()
-#           UserProfile.objects.get_or_create(user=new_user)
-#           return redirect(reverse('accounts:login'))
-#   else:
-#       form = RegistrationForm()
-#   context = {
-#         'form': form,
-#     }
-#   return render(request, 'accounts/reg_form.html', context)
-
-
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST or None)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.is_active = False
-            user.save()
-            current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
-            message = render_to_string('accounts/acc_active_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                'token':account_activation_token.make_token(user),
-            })
-            to_email = form.cleaned_data.get('email')
-            email = EmailMessage(
-                        mail_subject, message, to=[to_email]
-            )
-            email.send()
-            return HttpResponse('Please confirm your email address to complete the registration')
+            new_user = form.save(commit=False)
+            new_user.set_password(form.cleaned_data['password'])
+            new_user.save()
+            UserProfile.objects.get_or_create(user=new_user)
+            return redirect(reverse('accounts:login'))
     else:
         form = RegistrationForm()
-    return render(request, 'accounts/reg_form.html', {'form': form})
+    context = {
+        'form': form,
+    }
+    return render(request, 'accounts/reg_form.html', context)
+
+
+# def register(request):
+#     if request.method == 'POST':
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             user = form.save(commit=False)
+#             user.is_active = False
+#             user.save()
+#             current_site = get_current_site(request)
+#             mail_subject = 'Activate your blog account.'
+#             message = render_to_string('accounts/acc_active_email.html', {
+#                 'user': user,
+#                 'domain': current_site.domain,
+#                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+#                 'token':account_activation_token.make_token(user),
+#             })
+#             to_email = form.cleaned_data.get('email')
+#             email = EmailMessage(
+#                         mail_subject, message, to=[to_email]
+#             )
+#             email.send()
+#             return HttpResponse('Please confirm your email address to complete the registration')
+#     else:
+#         form = RegistrationForm()
+#     return render(request, 'accounts/reg_form.html', {'form': form})
 
 def activate(request, uidb64, token):
     try:
@@ -344,7 +346,7 @@ def activate(request, uidb64, token):
 #                 form = HomeForm()
 #                 form1 = CommentForm()
 #         return redirect('home:home')
-
+@login_required(login_url='/accounts/login/')
 def search(request):
     template_name = 'accounts/search.html'
     results = None
@@ -445,7 +447,7 @@ def search(request):
 
 #     context = {
 #                 'r': results,
-#     }
+#     } 
 #     return render(request, template_name, context)       
 
 def landing_page(request):
@@ -468,6 +470,33 @@ def landing_page(request):
     print(1)
     # return render_to_response('accounts/login1.html', context_instance=RequestContext(request))
     return render(request, 'accounts/login.html')
+    
 
+def register1(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        # if User.objects.filter(username=cleaned_data['username']).exists():
+        #     messages.error(request,'username is already taken')
+        #     return redirect('accounts/register1')
+        first_name = request.POST.get('firstname')
+        last_name = request.POST.get('lastname')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        password2 = request.POST.get('password2')
+        gender = request.POST.get('gender')
+        user = User.objects.create_user(username=username, password=password,
+                                        first_name=first_name,email = email,
+                                        last_name=last_name)
+        user.save()
+        if user:
+            return HttpResponseRedirect(reverse("accounts:login1"))
+        def clean_username(self):
+            username = self.cleaned_data['username']
+            try:
+                user = User.objects.exclude(pk=self.instance.pk).get(username=username)
+            except User.DoesNotExist:
+                return username
+            raise forms.ValidationError(u'Username "%s" is already in use.' % username)    
+    return render(request, 'accounts/signup.html')
 
-        
+ 

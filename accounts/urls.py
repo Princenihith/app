@@ -6,14 +6,16 @@ from django.contrib.auth.views import (
   password_reset_done , password_reset_confirm,
   password_reset_complete
   )
-app_name = "accounts" 
+from django.conf import settings
+app_name = "accounts"  
 
 urlpatterns = [
      # path('',views.home,name='home'),
      # path('login/', login ,  {'template_name': 'accounts/login.html' } , name='login' ),
-     path('login/', views.landing_page , name='login1' ),
-     path('logout/', logout ,  {'template_name': 'accounts/logout.html' } , name='logout' ),
+     path('login1/', views.landing_page , name='login1' ),
+     path('logout/', logout ,  {'template_name': 'accounts/logout.html' },name='logout'),
      path('register/', views.register , name= 'register'),
+     path('register1/', views.register1 , name= 'register1'),
      url(r'^profile/(?P<username>\w+)/?$', views.view_profile, name='profile'),
      #path('profile/', views.view_profile , name= 'profile'),
      url(r'^edit/$',views.edit_profile, name='edit_profile'),
@@ -25,8 +27,8 @@ urlpatterns = [
 
      path('reset-password/done/', password_reset_done, {'template_name':
                  'accounts/reset_password_done.html'} , name='password_reset_done'),
-
-     path('reset-password/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/',password_reset_confirm,{'template_name':
+ 
+     path('reset-password/confirm/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>.+)/',password_reset_confirm,{'template_name':
                  'accounts/reset_password_confirm.html',
                    'post_reset_redirect':'accounts:password_reset_complete'}, name='password_reset_confirm'),
 
@@ -35,4 +37,6 @@ urlpatterns = [
                  'accounts/reset_password_complete.html'}, name='password_reset_complete'),
      path('model/',views.model, name='model'),
      path('model_view/',views.view_model, name='view_model'),
+     path('activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/',
+        views.activate, name='activate'),
 ]

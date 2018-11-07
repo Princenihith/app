@@ -1,0 +1,91 @@
+
+ {% load static %}
+ <!DOCTYPE html>
+<html lang="en">
+
+  <head> 
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Allabouthairdressers</title>
+
+    <link href="{% static 'css/bootstrap.css' %}"  rel="stylesheet">
+    <link href="{% static 'css/signup.css' %}"  rel="stylesheet">
+
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Courgette|Kaushan+Script" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <nav class="navbar  bg-light static-top " style="height: 80px;">  
+      <a class="navbar-brand" href="#"><img src="{% static 'accounts/logo1.png' %}"></a>
+      <div class="button_main">
+        <a class="btn btn_main" href="{% url 'accounts:register1' %}"> Sign In</a>
+        <a class="btn  btn_main2" href="{% url 'accounts:login1' %}"> Login</a>
+        
+        
+      </div>
+    </nav>
+
+
+
+<form action="" method="post">
+            {% csrf_token %}
+  <div class="container">
+    <h1>Sign Up</h1>
+    <hr>
+
+    <label for="username"><b>User Name</b></label>
+    <input type="text" placeholder="Enter user name" name="username" >
+
+    <label for="firstname"><b>First Name</b></label>
+    <input type="text" placeholder="Enter First name" name="firstname" >
+
+    <label for="lastname"><b>Last Name</b></label>
+    <input type="text" placeholder="Enter Last name" name="lastname">
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email">
+
+    <label for="password"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password">
+
+    <label for="password2"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" name="password2">
+
+    <label for="gender"><b>Gender</b></label><br>
+    <input type="radio" name="gender"> Male
+    <input type="radio" name="gender"> Female<br><br>
+
+    <label for="user"><b>Create  account as</b></label><br>
+    <input type="radio" name="user"> Hairdresser
+    <input type="radio" name="user"> User<br><br/>
+
+    <label>
+      <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+    </label>
+
+    <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+    <div class="boo clearfix">
+      <button type="submit" class="signupbtn">Sign Up</button>
+    </div>
+  </div>
+</form>
+
+
+
+  </body>
+</html>
+{% for field in form %}
+   <b>{{ field.label_tag }}</b></label>
+    {{ field }}
+    {% if field.help_text %}
+          <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+      </p>
+    {% endfor %} 
