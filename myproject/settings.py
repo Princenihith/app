@@ -77,7 +77,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tutorial.wsgi.application'
+WSGI_APPLICATION = 'myproject.wsgi.application'
 
 
 # Database
@@ -131,7 +131,7 @@ USE_TZ = True
 
 # STATIC_URL = '/static/' # the path in url
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'tutorial/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'myproject/media/')
 #MEDIA_ROOT = (BASE_DIR)
 print(MEDIA_ROOT)
 # print(STATIC_URL)
